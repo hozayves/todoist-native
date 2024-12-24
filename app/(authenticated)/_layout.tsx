@@ -5,7 +5,10 @@ import { Colors } from '@/constants/Colors'
 
 const Layout = () => {
     return (
-        <Stack screenOptions={{ headerShown: false, contentStyle: { backgroundColor: Colors.background } }} />
+        <Stack screenOptions={{ headerShown: false, contentStyle: { backgroundColor: Colors.background } }}>
+            <Stack.Screen name='(tabs)' options={{ headerShown: false }} />
+            <Stack.Screen name='task/new' />
+        </Stack>
     )
 }
 

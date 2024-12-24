@@ -35,7 +35,19 @@
         }
       ],
       "expo-secure-store",
-      "react-native-bottom-tabs"
+      "react-native-bottom-tabs",
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "minSdkVersion": 23,
+            "compileSdkVersion": 33,
+            "targetSdkVersion": 33,
+            "buildToolVersion": "33.0.0",
+            "kotlinVersion": "1.6.20"
+          }
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true

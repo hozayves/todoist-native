@@ -4,7 +4,8 @@ import { ClerkProvider, ClerkLoaded, useAuth } from '@clerk/clerk-expo'
 import { router, Slot, Stack, usePathname, useRouter, useSegments } from 'expo-router'
 import { useEffect } from 'react'
 import { View, Text } from 'react-native'
-
+import { GestureHandlerRootView } from 'react-native-gesture-handler'
+import { Toaster } from 'sonner-native'
 const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY!
 
 if (!publishableKey) {
@@ -24,8 +25,8 @@ const InitialLayout = () => {
   useEffect(() => {
     if (!isLoaded) return
 
-    console.log('Segments', segment)
-    console.log('pathname', pathname)
+    console.log('isSignedIn', isSignedIn)
+    console.log('isLoaded', isLoaded)
 
     if (isSignedIn && !inAuthGroup) {
       router.replace('/(authenticated)/(tabs)/today')
@@ -52,7 +53,10 @@ const RootLayout = () => {
   return (
     <ClerkProvider publishableKey={publishableKey} tokenCache={tokenCache}>
       <ClerkLoaded>
-        <InitialLayout />
+        <GestureHandlerRootView style={{ flex: 1 }}>
+          <InitialLayout />
+          <Toaster />
+        </GestureHandlerRootView>
       </ClerkLoaded>
     </ClerkProvider>
   )

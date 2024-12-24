@@ -1,11 +1,13 @@
 import { View, Text } from 'react-native'
 import React from 'react'
+import Fab from '@/components/Fab'
 
 const Page = () => {
     return (
-        <View>
+        <>
             <Text>Today Page</Text>
-        </View>
+            <Fab />
+        </>
     )
 }
 

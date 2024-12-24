@@ -10,7 +10,7 @@ const Page = () => {
                     <Text>Search Page</Text>
                 </View>
             </ScrollView>
-            <Fab />
+            {/* <Fab /> */}
         </>
     )
 }
