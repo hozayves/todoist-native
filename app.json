@@ -9,7 +9,8 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.anonymous.todoist"
     },
     "android": {
       "adaptiveIcon": {
@@ -35,22 +36,19 @@
         }
       ],
       "expo-secure-store",
-      "react-native-bottom-tabs",
-      [
-        "expo-build-properties",
-        {
-          "android": {
-            "minSdkVersion": 23,
-            "compileSdkVersion": 33,
-            "targetSdkVersion": 33,
-            "buildToolVersion": "33.0.0",
-            "kotlinVersion": "1.6.20"
-          }
-        }
-      ]
+      "react-native-bottom-tabs"
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "cfa26be3-f012-4f73-a614-f0022fe53b50"
+      }
+    },
+    "owner": "hozayves"
   }
 }
