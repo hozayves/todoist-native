@@ -75,7 +75,7 @@ const RootLayout = () => {
     <ClerkProvider publishableKey={publishableKey} tokenCache={tokenCache}>
       <ClerkLoaded>
         <Suspense fallback={<Loading />}>
-          <SQLiteProvider databaseName='todos' useSuspense>
+          <SQLiteProvider databaseName='todos' useSuspense options={{ enableChangeListener: true }}>
             <GestureHandlerRootView style={{ flex: 1 }}>
               <InitialLayout />
               <Toaster />
