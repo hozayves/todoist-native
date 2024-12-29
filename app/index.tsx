@@ -43,7 +43,7 @@ export default function index() {
 
   return (
     <View style={[styles.container, { paddingTop: top }]}>
-      <StatusBar barStyle="dark-content" backgroundColor={Colors.primary} />
+      <StatusBar barStyle="dark-content" />
       <Image source={require("@/assets/images/todoist-logo.png")} style={styles.loginImage} resizeMode='contain' />
       <Image source={require("@/assets/images/login.png")} style={styles.bannerImage} resizeMode='contain' />
       <View style={styles.buttonContainer}>
