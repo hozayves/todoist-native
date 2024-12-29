@@ -20,14 +20,16 @@ export const addDummyData = async (db: ExpoSQLiteDatabase) => {
             priority: 1,
             completed: 0,
             project_id: 1,
-            date_added: Date.now()
+            date_added: Date.now(),
+            due_date: '1706688000'
         },
         {
             name: 'Buy Groceries for the week',
             priority: 2,
             completed: 0,
             project_id: 1,
-            date_added: Date.now()
+            date_added: Date.now(),
+
         }
     ]);
     AsyncStorage.setItemSync('initialized', 'true')
