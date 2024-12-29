@@ -5,8 +5,8 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "myapp",
-    "userInterfaceStyle": "automatic",
+    "scheme": "hozayvestodoist",
+    "userInterfaceStyle": "dark",
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
@@ -14,7 +14,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "foregroundImage": "./assets/images/todoist-logo.png",
         "backgroundColor": "#ffffff"
       },
       "package": "com.anonymous.todoist"
@@ -22,21 +22,22 @@
     "web": {
       "bundler": "metro",
       "output": "static",
-      "favicon": "./assets/images/favicon.png"
+      "favicon": "./assets/images/todoist-logo.png"
     },
     "plugins": [
       "expo-router",
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/splash-icon.png",
+          "image": "./assets/images/todoist-logo.png",
           "imageWidth": 200,
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
         }
       ],
       "expo-secure-store",
-      "react-native-bottom-tabs"
+      "react-native-bottom-tabs",
+      "expo-sqlite"
     ],
     "experiments": {
       "typedRoutes": true
@@ -46,9 +47,15 @@
         "origin": false
       },
       "eas": {
-        "projectId": "cfa26be3-f012-4f73-a614-f0022fe53b50"
+        "projectId": "3a79c1df-7433-4e82-a000-9d01910f0244"
       }
     },
-    "owner": "hozayves"
+    "owner": "hozayves",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/3a79c1df-7433-4e82-a000-9d01910f0244"
+    }
   }
 }
