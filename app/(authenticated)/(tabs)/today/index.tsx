@@ -65,10 +65,6 @@ const Page = () => {
 
     }, [data])
 
-    const hozayvesError = () => {
-        throw new Error('Hozayves error')
-    }
-
     return (
         <>
             <View style={[styles.container, { paddingTop: top + 20 }]}>
@@ -81,8 +77,6 @@ const Page = () => {
                 // refreshControl={<RefreshControl refreshing={false} onRefresh={() => console.log("Section Refresh.")} />}
                 />
             </View>
-            <Button title='Try!' onPress={() => { Sentry.captureException(new Error('First error')) }} />
-            <Button title='Hozayves error' onPress={() => { hozayvesError() }} />
             <Fab />
         </>
     )
