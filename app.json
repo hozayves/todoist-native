@@ -37,7 +37,15 @@
       ],
       "expo-secure-store",
       "react-native-bottom-tabs",
-      "expo-sqlite"
+      "expo-sqlite",
+      [
+        "@sentry/react-native/expo",
+        {
+          "url": "https://sentry.io/",
+          "project": "todoist",
+          "organization": "hozayves"
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true

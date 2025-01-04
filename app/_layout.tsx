@@ -1,7 +1,7 @@
 import { Colors } from '@/constants/Colors'
 import { tokenCache } from '@/utils/cache'
 import { ClerkProvider, ClerkLoaded, useAuth } from '@clerk/clerk-expo'
-import { router, Slot, Stack, usePathname, useRouter, useSegments } from 'expo-router'
+import { router, Slot, Stack, useNavigationContainerRef, usePathname, useRouter, useSegments } from 'expo-router'
 import { Suspense, useEffect } from 'react'
 import { View, Text, ActivityIndicator } from 'react-native'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
@@ -12,6 +12,33 @@ import { useMigrations } from 'drizzle-orm/expo-sqlite/migrator'
 import migrations from '@/drizzle/migrations'
 import { addDummyData } from '@/utils/addDummyData'
 
+import * as Sentry from '@sentry/react-native';
+
+const navigationIntegration = Sentry.reactNavigationIntegration({
+  enableTimeToInitialDisplay: true, // Only show the time to initial display if it's less than 1000ms, Only in native builds, not in expo Go
+})
+
+Sentry.init({
+  dsn: 'https://eaf5a178624b689d716ad8c2451fa365@o4507794120048640.ingest.de.sentry.io/4508553070706768',
+
+  attachScreenshot: true,
+  tracesSampleRate: 1.0,
+  _experiments: {
+    profilesSampleRate: 1.0,
+    replaysSessionSampleRate: 1.0, // Change in production
+    replaysOnErrorSampleRate: 1.0,
+  },
+  integrations: [Sentry.mobileReplayIntegration({
+    maskAllText: true,
+    maskAllImages: true,
+    maskAllVectors: true
+  }),
+    navigationIntegration,
+  Sentry.spotlightIntegration() // Sentry for crash reporting for development
+  ],
+  // uncomment the line below to enable Spotlight (https://spotlightjs.com)
+  // enableSpotlight: __DEV__,
+});
 const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY!
 
 if (!publishableKey) {
@@ -56,6 +83,13 @@ const InitialLayout = () => {
   )
 }
 const RootLayout = () => {
+  const ref = useNavigationContainerRef()
+
+  useEffect(() => {
+    navigationIntegration.registerNavigationContainer(ref)
+  }, [ref])
+
+
   const expoDB = openDatabaseSync('todos')
   const db = drizzle(expoDB)
 
@@ -91,4 +125,4 @@ function Loading() {
   return <ActivityIndicator size="large" color={Colors.primary} />
 }
 
-export default RootLayout
+export default Sentry.wrap(RootLayout)

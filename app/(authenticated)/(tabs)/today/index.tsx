@@ -1,4 +1,4 @@
-import { View, Text, SectionList, StyleSheet } from 'react-native'
+import { View, Text, SectionList, StyleSheet, Button } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import Fab from '@/components/Fab'
 import { useSQLiteContext } from 'expo-sqlite'
@@ -11,6 +11,7 @@ import { Todo } from '@/types/interfaces'
 import TaskRow from '@/components/TaskRow'
 import { Colors } from '@/constants/Colors'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import * as Sentry from '@sentry/react-native'
 
 interface Section {
     title: string,
@@ -63,6 +64,11 @@ const Page = () => {
         setSectionListData(listData)
 
     }, [data])
+
+    const hozayvesError = () => {
+        throw new Error('Hozayves error')
+    }
+
     return (
         <>
             <View style={[styles.container, { paddingTop: top + 20 }]}>
@@ -75,6 +81,8 @@ const Page = () => {
                 // refreshControl={<RefreshControl refreshing={false} onRefresh={() => console.log("Section Refresh.")} />}
                 />
             </View>
+            <Button title='Try!' onPress={() => { Sentry.captureException(new Error('First error')) }} />
+            <Button title='Hozayves error' onPress={() => { hozayvesError() }} />
             <Fab />
         </>
     )
