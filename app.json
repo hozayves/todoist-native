@@ -55,7 +55,7 @@
         "origin": false
       },
       "eas": {
-        "projectId": "3a79c1df-7433-4e82-a000-9d01910f0244"
+        "projectId": "a3de5f4e-c284-4505-9b6c-bfb3f9fe1fb3"
       }
     },
     "owner": "hozayves",
@@ -63,7 +63,7 @@
       "policy": "appVersion"
     },
     "updates": {
-      "url": "https://u.expo.dev/3a79c1df-7433-4e82-a000-9d01910f0244"
+      "url": "https://u.expo.dev/a3de5f4e-c284-4505-9b6c-bfb3f9fe1fb3"
     }
   }
 }
