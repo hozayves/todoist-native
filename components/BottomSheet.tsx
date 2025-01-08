@@ -1,8 +1,7 @@
 import { Colors } from "@/constants/Colors";
 import { BottomSheetBackdrop, BottomSheetModal, BottomSheetView } from "@gorhom/bottom-sheet";
-import { forwardRef, useCallback, useMemo } from "react";
-import { Text, StyleSheet, View } from "react-native";
-import TodoForm from "./TodoForm";
+import { forwardRef, useMemo } from "react";
+import { StyleSheet } from "react-native";
 
 interface Props {
     title: string;
