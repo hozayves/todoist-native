@@ -1,22 +1,28 @@
 import { StyleSheet, TouchableOpacity } from 'react-native'
-import React from 'react'
-import { toast } from 'sonner-native'
+import React, { useRef } from 'react'
 import { Colors } from '@/constants/Colors'
 import { Ionicons } from '@expo/vector-icons'
-import { useRouter } from 'expo-router'
 import * as Haptics from 'expo-haptics'
+import TodoForm from './TodoForm'
+import BottomSheet from './BottomSheet'
+import { BottomSheetModal } from '@gorhom/bottom-sheet'
 
 
 const Fab = () => {
-    const router = useRouter()
+    const bottomSheetRef = useRef<BottomSheetModal>(null)
     const onPress = () => {
         Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
-        router.push('/task/new')
+        bottomSheetRef.current?.present()
     }
     return (
-        <TouchableOpacity onPress={onPress} style={styles.fab}>
-            <Ionicons name='add' size={30} color="white" />
-        </TouchableOpacity>
+        <>
+            <TouchableOpacity onPress={onPress} style={styles.fab}>
+                <Ionicons name='add' size={30} color="white" />
+            </TouchableOpacity>
+            <BottomSheet title='Add Task' ref={bottomSheetRef} >
+                <TodoForm />
+            </BottomSheet>
+        </>
     )
 }
 
