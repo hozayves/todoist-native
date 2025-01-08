@@ -13,6 +13,7 @@ import migrations from '@/drizzle/migrations'
 import { addDummyData } from '@/utils/addDummyData'
 
 import * as Sentry from '@sentry/react-native';
+import { BottomSheetModalProvider } from '@gorhom/bottom-sheet'
 
 const navigationIntegration = Sentry.reactNavigationIntegration({
   enableTimeToInitialDisplay: true, // Only show the time to initial display if it's less than 1000ms, Only in native builds, not in expo Go
@@ -111,8 +112,10 @@ const RootLayout = () => {
         <Suspense fallback={<Loading />}>
           <SQLiteProvider databaseName='todos' useSuspense options={{ enableChangeListener: true }}>
             <GestureHandlerRootView style={{ flex: 1 }}>
-              <InitialLayout />
-              <Toaster />
+              <BottomSheetModalProvider>
+                <InitialLayout />
+                <Toaster />
+              </BottomSheetModalProvider>
             </GestureHandlerRootView>
           </SQLiteProvider>
         </Suspense>
