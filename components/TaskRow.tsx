@@ -1,5 +1,5 @@
 import { Pressable, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React from 'react'
+import React, { useRef } from 'react'
 import { Todo } from '@/types/interfaces'
 import { Link } from 'expo-router';
 import { Colors } from '@/constants/Colors';
@@ -8,6 +8,9 @@ import { useSQLiteContext } from 'expo-sqlite';
 import { drizzle } from 'drizzle-orm/expo-sqlite';
 import { todos } from '@/db/schema';
 import { eq } from 'drizzle-orm';
+import BottomSheet from './BottomSheet';
+import { BottomSheetModal } from '@gorhom/bottom-sheet';
+import TaskDetails from '@/app/(authenticated)/task/TaskDetails';
 
 interface TaskRowTodo {
     task: Todo;
@@ -21,25 +24,28 @@ const TaskRow = ({ task }: TaskRowTodo) => {
         console.log('markAsCompleted')
         await drizzleDB.update(todos).set({ completed: 1, date_completed: Date.now() }).where(eq(todos.id, task.id))
     }
+    const bottomSheetRef = useRef<BottomSheetModal>(null)
+    const openBottomSheet = () => bottomSheetRef.current?.present()
     return (
         <View>
-            <Link href={`/task/${task.id}`} style={styles.container} asChild>
-                <Pressable>
-                    <View style={styles.row}>
-                        <BounceCheckBox
-                            size={25}
-                            textContainerStyle={{ display: 'none' }}
-                            fillColor={task.project_color}
-                            unFillColor='#fff'
-                            isChecked={task.completed === 1}
-                            textStyle={{ color: '#000', fontSize: 16, textDecorationLine: 'none' }}
-                            onPress={markCompleted}
-                        />
-                        <Text style={styles.name}>{task.name}</Text>
-                    </View>
-                    <Text style={styles.projectName}>{task.project_name}</Text>
-                </Pressable>
-            </Link>
+            <Pressable style={styles.container} onPress={openBottomSheet}>
+                <View style={styles.row}>
+                    <BounceCheckBox
+                        size={25}
+                        textContainerStyle={{ display: 'none' }}
+                        fillColor={task.project_color}
+                        unFillColor='#fff'
+                        isChecked={task.completed === 1}
+                        textStyle={{ color: '#000', fontSize: 16, textDecorationLine: 'none' }}
+                        onPress={markCompleted}
+                    />
+                    <Text style={styles.name}>{task.name}</Text>
+                </View>
+                <Text style={styles.projectName}>{task.project_name}</Text>
+            </Pressable>
+            <BottomSheet title='Task Details' ref={bottomSheetRef} >
+                <TaskDetails id={task.id} />
+            </BottomSheet>
         </View>
     )
 }
