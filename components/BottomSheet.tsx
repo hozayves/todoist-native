@@ -1,16 +1,21 @@
 import { Colors } from "@/constants/Colors";
 import { BottomSheetBackdrop, BottomSheetModal, BottomSheetView } from "@gorhom/bottom-sheet";
 import { forwardRef, useMemo } from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, StyleProp, ViewStyle } from "react-native";
 
 interface Props {
-    title: string;
+    title?: string;
+    snapPoints?: string[];
+    index?: number;
+    style?: StyleProp<ViewStyle>;
     children: React.ReactNode;
 }
 type Ref = BottomSheetModal;
 
 const BottomSheet = forwardRef<Ref, Props>((props, ref) => {
-    const snapPoints = useMemo(() => [], []);
+    const snapPoints = useMemo(() => props.snapPoints || [], []);
+    const index = useMemo(() => props.index || 0, []);
+
 
     const renderBackdrop = (props: any) => (
         <BottomSheetBackdrop
@@ -18,17 +23,19 @@ const BottomSheet = forwardRef<Ref, Props>((props, ref) => {
             disappearsOnIndex={-1} {...props}
         />)
 
+
     return (
         <BottomSheetModal
             ref={ref}
-            index={0}
+            index={index}
             snapPoints={snapPoints}
             handleIndicatorStyle={{ backgroundColor: Colors.dark }}
             backgroundStyle={{ backgroundColor: Colors.background }}
             backdropComponent={renderBackdrop}
-            style={styles.contentContainer}
+            style={[styles.contentContainer, props.style]}
             enablePanDownToClose={true}
             enableDynamicSizing={true}
+            {...props}
         >
             <BottomSheetView>
                 {props.children}
