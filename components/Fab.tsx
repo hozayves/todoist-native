@@ -19,7 +19,7 @@ const Fab = () => {
             <TouchableOpacity onPress={onPress} style={styles.fab}>
                 <Ionicons name='add' size={30} color="white" />
             </TouchableOpacity>
-            <BottomSheet title='Add Task' ref={bottomSheetRef} >
+            <BottomSheet title='Add Task' ref={bottomSheetRef} snapPoints={[]} index={0} >
                 <TodoForm />
             </BottomSheet>
         </>
