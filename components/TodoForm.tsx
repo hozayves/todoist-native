@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, StyleSheet, TextInput, Pressable, KeyboardAvoidingView, Platform, TouchableOpacity } from "react-native"
+import { View, Text, ScrollView, StyleSheet, TextInput, Pressable, KeyboardAvoidingView, Platform, TouchableOpacity, Modal, Dimensions, FlatList } from "react-native"
 import { Controller, SubmitHandler, useForm } from "react-hook-form"
 import { Project, Todo } from "@/types/interfaces"
 import { drizzle, useLiveQuery } from "drizzle-orm/expo-sqlite"
@@ -42,6 +42,7 @@ const TodoForm = ({ todo }: TodoFormProps) => {
     const { data } = useLiveQuery(drizzleDb.select().from(projects))
 
     // PROJECT SELECTION 
+    const [showProjectSelect, setShowProjectSelect] = useState(false)
     const [selectedProject, setSelectedProject] = useState<Project>(
         todo?.project_id
             ? {
@@ -126,12 +127,41 @@ const TodoForm = ({ todo }: TodoFormProps) => {
             }
         }
     }
+
+    const onProjectSelect = (project: Project) => {
+        setSelectedProject(project)
+        setShowProjectSelect(false)
+    }
     return (
         <KeyboardAvoidingView
             enabled
             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
             keyboardVerticalOffset={Platform.OS === 'ios' ? 100 : 50}
             style={{ backgroundColor: '#fff' }}>
+            <Modal
+                visible={showProjectSelect}
+                transparent={true}
+                animationType="fade"
+                onRequestClose={() => setShowProjectSelect(false)}
+            >
+                <View style={styles.centeredView}>
+                    <View style={styles.modalView}>
+                        <FlatList
+                            data={data}
+                            renderItem={({ item }) => (
+                                <TouchableOpacity
+                                    onPress={() => onProjectSelect(item)}
+                                    style={styles.projectButton}>
+                                    <Text style={{ color: item.color }}>#{item.id}</Text>
+                                    <Text style={styles.projectButtonText}>{item.name}</Text>
+                                </TouchableOpacity>
+                            )}
+                            keyExtractor={(item) => item.id.toString()}
+                            ItemSeparatorComponent={() => <View style={{ height: StyleSheet.hairlineWidth, backgroundColor: Colors.lightBorder }} />}
+                        />
+                    </View>
+                </View>
+            </Modal>
             <ScrollView
                 contentContainerStyle={[styles.container]}
                 keyboardShouldPersistTaps="always"
@@ -213,24 +243,31 @@ const TodoForm = ({ todo }: TodoFormProps) => {
                         <Ionicons name="location-outline" size={24} color={Colors.dark} />
                         <Text style={styles.outlineButtonText}>Location</Text>
                     </Pressable>
-                    <Pressable style={({ pressed }) => {
-                        return [
-                            styles.outlineButton,
-                            {
-                                backgroundColor: pressed ? Colors.lightBorder : 'transparent'
-                            }
-                        ]
-                    }}>
+                    <Pressable
+                        style={({ pressed }) => {
+                            return [
+                                styles.outlineButton,
+                                {
+                                    backgroundColor: pressed ? Colors.lightBorder : 'transparent'
+                                }
+                            ]
+                        }}>
                         <Ionicons name="pricetags-outline" size={24} color={Colors.dark} />
                         <Text style={styles.outlineButtonText}>Labels</Text>
                     </Pressable>
                 </ScrollView>
                 <View style={styles.bottomRow}>
                     <TouchableOpacity
-                        onPress={() => console.log("LABELS")}
+                        onPress={() => setShowProjectSelect(true)}
                         style={styles.outlineButton}>
-                        <Ionicons name="pricetags-outline" size={24} color={Colors.dark} />
-                        <Text style={styles.outlineButtonText}>Labels</Text>
+                        {selectedProject.id === 1 && (
+                            <Ionicons name="file-tray-outline" size={24} color={Colors.dark} />
+                        )}
+                        {selectedProject.id !== 1 && (
+                            <Text style={{ color: selectedProject.color }}>#{selectedProject.id}</Text>
+                        )}
+                        <Text style={styles.outlineButtonText}>{selectedProject.name}</Text>
+                        <Ionicons name="chevron-down" size={14} color={Colors.dark} />
                     </TouchableOpacity>
                     <TouchableOpacity
                         onPress={() => handleSubmit(onSubmit)()}
@@ -313,6 +350,31 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center'
+    },
+    centeredView: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    modalView: {
+        margin: 20,
+        width: Dimensions.get('window').width - 60,
+        height: 200,
+        backgroundColor: '#fff',
+        borderRadius: 16,
+        boxShadow: '0 0 10px rgba(0, 0, 0, 0.2)',
+        elevation: 5,
+    },
+    projectButton: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 14,
+        backgroundColor: '#fff',
+        padding: 14,
+        borderRadius: 5
+    },
+    projectButtonText: {
+        fontSize: 16,
     }
 })
 
