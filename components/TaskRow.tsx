@@ -43,7 +43,10 @@ const TaskRow = ({ task }: TaskRowTodo) => {
                 </View>
                 <Text style={styles.projectName}>{task.project_name}</Text>
             </Pressable>
-            <BottomSheet title='Task Details' ref={bottomSheetRef} >
+            <BottomSheet
+                ref={bottomSheetRef}
+                snapPoints={['39%']}
+                index={1} >
                 <TaskDetails id={task.id} />
             </BottomSheet>
         </View>
