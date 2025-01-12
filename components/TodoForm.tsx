@@ -60,16 +60,17 @@ const TodoForm = ({ todo }: TodoFormProps) => {
     const [selectedDate, setSelectedDate] = useState<Date>(
         todo?.due_date ? new Date(todo.due_date) : new Date()
     )
-    const [previouslySelectedDate, setPreviouslySelectedDate] = useState<string | undefined>(undefined)
+    const [previouslySelectedDate, setPreviouslySelectedDate] = useState<string | null>(
+        SecureStore.getItem('selectedDate')
+    )
 
     useEffect(() => {
-        SecureStore.getItemAsync('selectedDate').then((date) => {
-            if (date !== null) {
-                setSelectedDate(new Date(date))
-                setPreviouslySelectedDate(undefined)
-            }
-        })
-    }, [])
+        if (previouslySelectedDate) {
+            setSelectedDate(new Date(previouslySelectedDate))
+            setPreviouslySelectedDate(null)
+            SecureStore.deleteItemAsync('selectedDate')
+        }
+    }, [previouslySelectedDate])
 
     // SUBMIT HANDLING 
     const onSubmit: SubmitHandler<TodoFormData> = async (data) => {
@@ -128,6 +129,7 @@ const TodoForm = ({ todo }: TodoFormProps) => {
         }
     }
 
+    // PROJECT SELECTION
     const onProjectSelect = (project: Project) => {
         setSelectedProject(project)
         setShowProjectSelect(false)
@@ -219,7 +221,12 @@ const TodoForm = ({ todo }: TodoFormProps) => {
                             ]
                         }}>
                         <Ionicons name="calendar-outline" size={24} color={getDateObject(selectedDate).color} />
-                        <Text style={[styles.outlineButtonText, { color: getDateObject(selectedDate).color }]}>{getDateObject(selectedDate).name}</Text>
+                        <Text
+                            style={[styles.outlineButtonText, { color: getDateObject(selectedDate).color }]}>
+                            {
+                                getDateObject(selectedDate).name
+                            }
+                        </Text>
                     </Pressable>
                     <Pressable style={({ pressed }) => {
                         return [
