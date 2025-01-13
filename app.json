@@ -14,7 +14,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/todoist-logo.png",
+        "foregroundImage": "./assets/images/icon.png",
         "backgroundColor": "#ffffff"
       },
       "package": "com.anonymous.todoist"
@@ -45,7 +45,8 @@
           "project": "todoist",
           "organization": "hozayves"
         }
-      ]
+      ],
+      "expo-dynamic-app-icon"
     ],
     "experiments": {
       "typedRoutes": true
@@ -55,15 +56,11 @@
         "origin": false
       },
       "eas": {
-        "projectId": "a3de5f4e-c284-4505-9b6c-bfb3f9fe1fb3"
+        "projectId": "95aed663-b660-4c10-b391-ee2205fc3719"
       }
     },
-    "owner": "hozayves",
     "runtimeVersion": {
       "policy": "appVersion"
-    },
-    "updates": {
-      "url": "https://u.expo.dev/a3de5f4e-c284-4505-9b6c-bfb3f9fe1fb3"
     }
   }
 }

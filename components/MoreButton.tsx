@@ -26,7 +26,7 @@ const MoreButton = ({ pageName }: MoreButtonProps) => {
 
     return (
         <View style={styles.container}>
-            <TouchableOpacity onPress={() => setDropdownVisible(!isDropdownVisible)} style={{ borderWidth: 1 }}>
+            <TouchableOpacity onPress={() => setDropdownVisible(!isDropdownVisible)}>
                 <MaterialCommunityIcons name="dots-vertical" size={24} color={Colors.dark} />
             </TouchableOpacity>
             {isDropdownVisible && (
