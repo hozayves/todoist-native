@@ -68,14 +68,20 @@ const Page = () => {
     return (
         <>
             <View style={[styles.container, { paddingTop: top + 20 }]}>
-                <SectionList
-                    showsVerticalScrollIndicator={false}
-                    contentInsetAdjustmentBehavior='automatic'
-                    sections={sectionListData}
-                    renderItem={({ item }) => <TaskRow task={item} />}
-                    renderSectionHeader={({ section }) => <Text style={styles.header}>{section.title}</Text>}
-                // refreshControl={<RefreshControl refreshing={false} onRefresh={() => console.log("Section Refresh.")} />}
-                />
+                {sectionListData.length > 0 ? (
+                    <SectionList
+                        showsVerticalScrollIndicator={false}
+                        contentInsetAdjustmentBehavior='automatic'
+                        sections={sectionListData}
+                        renderItem={({ item }) => <TaskRow task={item} />}
+                        renderSectionHeader={({ section }) => <Text style={styles.header}>{section.title}</Text>}
+                    // refreshControl={<RefreshControl refreshing={false} onRefresh={() => console.log("Section Refresh.")} />}
+                    />
+                ) : (
+                    <View style={styles.emptyContainer}>
+                        <Text style={styles.emptyText}>No tasks for today</Text>
+                    </View>
+                )}
             </View>
             <Fab />
         </>
@@ -95,6 +101,16 @@ const styles = StyleSheet.create({
         padding: 14,
         borderBottomWidth: StyleSheet.hairlineWidth,
         borderBottomColor: Colors.lightBorder
+    },
+    emptyContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 14
+    },
+    emptyText: {
+        fontSize: 16,
+        color: Colors.lightText
     }
 })
 

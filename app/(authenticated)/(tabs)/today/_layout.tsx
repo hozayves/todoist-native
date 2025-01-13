@@ -29,7 +29,9 @@ const Layout = () => {
                     headerTitle: () => (
                         <View style={styles.headerTitle}>
                             <Text style={styles.headerTitleText}>Today</Text>
-                            <Text style={styles.headerTitleTime}>{count} tasks</Text>
+                            {count > 0 && (
+                                <Text style={styles.headerTitleTime}>{count} tasks</Text>
+                            )}
                         </View>
                     ),
                     headerLargeTitle: true,

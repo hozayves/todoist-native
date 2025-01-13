@@ -3,7 +3,7 @@ import { tokenCache } from '@/utils/cache'
 import { ClerkProvider, ClerkLoaded, useAuth } from '@clerk/clerk-expo'
 import { router, Slot, Stack, useNavigationContainerRef, usePathname, useRouter, useSegments } from 'expo-router'
 import { Suspense, useEffect } from 'react'
-import { View, Text, ActivityIndicator } from 'react-native'
+import { View, Text, ActivityIndicator, StatusBar } from 'react-native'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { Toaster } from 'sonner-native'
 import { SQLiteProvider, openDatabaseSync } from 'expo-sqlite'
@@ -114,6 +114,7 @@ const RootLayout = () => {
             <GestureHandlerRootView style={{ flex: 1 }}>
               <BottomSheetModalProvider>
                 <InitialLayout />
+                <StatusBar barStyle="dark-content" />
                 <Toaster />
               </BottomSheetModalProvider>
             </GestureHandlerRootView>
